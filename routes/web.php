@@ -12,6 +12,6 @@
 */
 
 Route::get('/', function () {
-    return 'Hello, cyberspace :)';
+    return view('index');
 });
 
