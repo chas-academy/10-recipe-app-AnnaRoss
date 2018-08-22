@@ -10,8 +10,6 @@
     </head>
     <body>
         <app-root></app-root>
-        <script type="text/javascript" src="inline.318b50c57b4eba3d437b.bundle.js"></script>
-        <script type="text/javascript" src="polyfills.ab16672f773c289d2617.bundle.js"></script>
-        <script type="text/javascript" src="main.78af5e069a8066af2a3c.bundle.js"></script>
+        <script type="text/javascript" src="inline.318b50c57b4eba3d437b.bundle.js"></script><script type="text/javascript" src="polyfills.ab16672f773c289d2617.bundle.js"></script><script type="text/javascript" src="main.ac7be95f12b6d0cd49d6.bundle.js"></script>
     </body>
 </html>
