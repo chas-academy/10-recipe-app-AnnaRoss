@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterFormRequest;
-use App\User;
+use App\User as User;
+use App\CustomList as CustomList;
 
 class AuthController extends Controller
 {   
@@ -27,10 +28,15 @@ class AuthController extends Controller
         $user->alias = $request->alias;
         $user->password = bcrypt($request->password);
         $user->save();
+        
+        $list = new CustomList;
+        $list->title = 'favourites';
+        $list->recipes_by_id = json_encode([]);
+        $list->user_id = $user['id'];
+        $list->save();
 
         return response()->json([
-            'message' => 'Successfully registered user',
-            'data' => $user
+            'message' => 'Successfully registered user'
         ], 200);
     }
 
@@ -57,9 +63,11 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
-    {
-        return response()->json($this->guard()->user());
+    public function getAuthenticatedUser()
+    {   
+        $user = $this->guard()->user();
+        $favourites = CustomList::where('user_id', $user->id)->where('title', 'favourites')->first();
+        return response()->json(['user' => $user, 'favourites' => $favourites]);
     }
 
     /**

@@ -5,6 +5,7 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomListController;
 use Illuminate\Http\Request;
 use App\User;
 /*
@@ -17,14 +18,18 @@ use App\User;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::post('/users', 'AuthController@register');
 
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
-    Route::post('login', 'AuthController@login');
+    Route::post('login','AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
-    Route::get('me', 'AuthController@me');
+    Route::get('me', 'AuthController@getAuthenticatedUser');
+    Route::get('me/lists', 'CustomListController@getListsByAuthenticatedUser');
+    Route::get('me/lists/favourites','CustomListController@getFavouritesByAuthenticatedUser');
+    Route::put('me/lists/favourites','CustomListController@updateCustomList');
 });
